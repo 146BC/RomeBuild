@@ -19,6 +19,8 @@
 		A14315BE1CDE2C8A00C279FD /* Carthage.swift in Sources */ = {isa = PBXBuildFile; fileRef = A14315BC1CDE2C8A00C279FD /* Carthage.swift */; };
 		A14315C01CDE33F800C279FD /* Environment.swift in Sources */ = {isa = PBXBuildFile; fileRef = A14315BF1CDE33F800C279FD /* Environment.swift */; };
 		A14315C31CDE449E00C279FD /* Unzip.swift in Sources */ = {isa = PBXBuildFile; fileRef = A14315C21CDE449E00C279FD /* Unzip.swift */; };
+		A14315C51CDE7E5700C279FD /* UploadCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = A14315C41CDE7E5700C279FD /* UploadCommand.swift */; };
+		A14315C91CDE7F7800C279FD /* Rome.swift in Sources */ = {isa = PBXBuildFile; fileRef = A14315C81CDE7F7800C279FD /* Rome.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -54,6 +56,8 @@
 		A14315BC1CDE2C8A00C279FD /* Carthage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Carthage.swift; path = RomeBuild/Carthage/Carthage.swift; sourceTree = SOURCE_ROOT; };
 		A14315BF1CDE33F800C279FD /* Environment.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Environment.swift; path = Utilities/Environment.swift; sourceTree = "<group>"; };
 		A14315C21CDE449E00C279FD /* Unzip.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Unzip.swift; path = Utilities/Unzip.swift; sourceTree = "<group>"; };
+		A14315C41CDE7E5700C279FD /* UploadCommand.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UploadCommand.swift; sourceTree = "<group>"; };
+		A14315C81CDE7F7800C279FD /* Rome.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Rome.swift; path = Utilities/Rome.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -113,6 +117,7 @@
 			children = (
 				A14315AC1CDBFEED00C279FD /* HelpCommand.swift */,
 				A14315AE1CDC014B00C279FD /* BuildCommand.swift */,
+				A14315C41CDE7E5700C279FD /* UploadCommand.swift */,
 			);
 			path = Commands;
 			sourceTree = "<group>";
@@ -132,6 +137,7 @@
 			children = (
 				A14315BF1CDE33F800C279FD /* Environment.swift */,
 				A14315C21CDE449E00C279FD /* Unzip.swift */,
+				A14315C81CDE7F7800C279FD /* Rome.swift */,
 			);
 			name = Utilities;
 			sourceTree = "<group>";
@@ -207,8 +213,10 @@
 			files = (
 				A14315AF1CDC014B00C279FD /* BuildCommand.swift in Sources */,
 				A14315C01CDE33F800C279FD /* Environment.swift in Sources */,
+				A14315C51CDE7E5700C279FD /* UploadCommand.swift in Sources */,
 				A14315AD1CDBFEED00C279FD /* HelpCommand.swift in Sources */,
 				A14315C31CDE449E00C279FD /* Unzip.swift in Sources */,
+				A14315C91CDE7F7800C279FD /* Rome.swift in Sources */,
 				A14315BE1CDE2C8A00C279FD /* Carthage.swift in Sources */,
 				A14315981CDBFC3F00C279FD /* main.swift in Sources */,
 				A14315BD1CDE2C8A00C279FD /* Cartfile.swift in Sources */,

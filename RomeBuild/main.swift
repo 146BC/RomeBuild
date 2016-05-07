@@ -13,36 +13,36 @@ if let baseUrl = env["ROME_ENDPOINT"], apiKey = env["ROME_KEY"] {
 }
 
 let cli = CommandLine()
-let build = BoolOption(shortFlag: "b",
-                           longFlag: "build",
-                           required: false,
-                           helpMessage: "Fetches builds from Rome server and builds the rest using Carthage")
+var build = BoolOption(shortFlag: "b",
+                       longFlag: "build",
+                       helpMessage: "Fetches builds from Rome server and builds the rest using Carthage")
 
 let platform = MultiStringOption(shortFlag: "p",
-                       longFlag: "platform",
-                       required: false,
-                       helpMessage: "Choose between: osx, ios, watchos, tvos")
+                                 longFlag: "platform",
+                                 required: false,
+                                 helpMessage: "Choose between: osx, ios, watchos, tvos")
 
 let upload = BoolOption(shortFlag: "u",
                         longFlag: "upload",
-                        required: false,
                         helpMessage: "Runs the archive command on every repository and uploads the specific version on Rome server")
 
 let help = BoolOption(shortFlag: "h",
                       longFlag: "help",
                       helpMessage: "Gives a list of supported operations")
 
-cli.setOptions(build, platform, upload, help)
+cli.addOptions(build, platform, upload, help)
 
 do {
     try cli.parse()
-    if (build.value) {
+    
+    if build.value {
         BuildCommand().build(platform.value)
-    } else if (upload.value) {
-        // WIP
+    } else if upload.value {
+        UploadCommand().upload()
     } else {
         HelpCommand().printHelp()
     }
+    
 } catch {
     cli.printUsage(error)
     exit(EX_USAGE)

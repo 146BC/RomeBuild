@@ -14,7 +14,10 @@ struct BuildCommand {
         
         for (name, revision) in dependencies {
             print(name, revision)
-            if !getLatestByRevison(name, revision: revision) {
+            if let asset = Rome().getLatestByRevison(name, revision: revision) {
+                self.downloadAndExtractAsset(asset)
+                print("Asset extracted to Carthage directory")
+            } else {
                 dependenciesToBuild[name] = revision
             }
         }
@@ -41,35 +44,7 @@ struct BuildCommand {
         print("Build complete")
         
     }
-    
-    private func getLatestByRevison(name: String, revision: String) -> Bool {
-        
-        var exists = false
-        let dispatchGroup = dispatch_group_create()
-        let queue = dispatch_queue_create("", DISPATCH_QUEUE_CONCURRENT)
-        
-        dispatch_group_enter(dispatchGroup)
-        
-        RomeKit.Assets.getLatestAssetByRevision(name.stringByAddingPercentEncodingWithAllowedCharacters(NSCharacterSet.alphanumericCharacterSet())!, revision: revision, queue: queue, completionHandler: { (asset, errors) in
-            if let asset = asset {
-                exists = true
-                print("Found asset on Rome:", asset.id!)
-                self.downloadAndExtractAsset(asset)
-                print("Asset extracted to Carthage directory")
-            } else {
-                exists = false
-                print("Asset not found in rome, added to build list")
-            }
-            
-            dispatch_group_leave(dispatchGroup)
-        })
-        
-        dispatch_group_wait(dispatchGroup, DISPATCH_TIME_FOREVER)
-        
-        return exists
-    }
-    
-    
+
     private func downloadAndExtractAsset(asset: Asset) {
         
         if let serverUrl = Environment().downloadServer() {
