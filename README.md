@@ -7,6 +7,10 @@ RomeBuild gives everyone the ability to store & reuse pre-built dependencies. To
 
 Environment variables `ROME_ENDPOINT` (Ex: http://localhost:3000/) & `ROME_KEY` (Client API Key) need to be set in order for RomeBuild to connect to Rome Server.
 
+### Installation
+
+`brew install 146BC/repo/romebuild`
+
 ### Usage examples
 
 `romebuild --build`
