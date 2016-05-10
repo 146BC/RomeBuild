@@ -20,7 +20,7 @@ var build = BoolOption(shortFlag: "b",
 let platform = MultiStringOption(shortFlag: "p",
                                  longFlag: "platform",
                                  required: false,
-                                 helpMessage: "Choose between: osx, ios, watchos, tvos")
+                                 helpMessage: "Choose between: osx,ios,watchos,tvos")
 
 let upload = BoolOption(shortFlag: "u",
                         longFlag: "upload",

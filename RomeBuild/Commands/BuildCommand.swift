@@ -17,6 +17,7 @@ struct BuildCommand {
             if let asset = Rome().getLatestByRevison(name, revision: revision) {
                 self.downloadAndExtractAsset(asset)
                 print("Asset extracted to Carthage directory")
+                print("")
             } else {
                 dependenciesToBuild[name] = revision
             }

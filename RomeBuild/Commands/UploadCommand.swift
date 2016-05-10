@@ -7,6 +7,8 @@ struct UploadCommand {
         
         if !Cartfile().exists() {
             Carthage(["update", "--no-build", "--no-checkout"])
+        } else {
+            Carthage(["bootstrap", "--no-build"])
         }
         
         var dependenciesToBuild = [String:String]()
