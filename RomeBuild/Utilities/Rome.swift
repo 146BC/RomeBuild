@@ -47,7 +47,7 @@ struct Rome {
             }, completionHandler: { (asset, error) in
                 
                 if let asset = asset {
-                    print("Asset created on Rome server:", asset.id)
+                    print("Asset created on Rome server:", asset.id!)
                 }
                 
                 dispatch_group_leave(dispatchGroup)
