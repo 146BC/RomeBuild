@@ -19,15 +19,26 @@ struct UploadCommand {
             if Rome().getLatestByRevison(name, revision: revision) == nil {
                 dependenciesToBuild[name] = revision
             }
+            print("")
         }
         
         let dependenciesToUploadArray = Array(dependenciesToBuild.keys.map { $0 })
         
         if dependenciesToUploadArray.count > 0 {
             for dependency in dependenciesToUploadArray {
-                Carthage(["build", dependency, "--no-skip-current"])
-                Carthage(["archive", dependency])
+                let dependencyPath = "\(Environment().currentDirectory()!)/Carthage/Checkouts/\(dependency)"
+                
+                print("Checkout project dependency \(dependency)")
+                Carthage(["checkout", dependency])
+                
+                print("Checkout inner dependencies for \(dependency)")
+                Carthage(["checkout", "--project-directory", dependencyPath])
+                
+                print("Building \(dependency) for archive")
+                Carthage(["build", "--no-skip-current", "--project-directory", dependencyPath])
+                Carthage(["archive", "--output", Environment().currentDirectory()!], path: dependencyPath)
                 uploadAsset(dependency, revision: dependenciesToBuild[dependency]!)
+                
             }
         }
         
