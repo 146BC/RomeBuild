@@ -38,7 +38,7 @@ do {
     if build.value {
         BuildCommand().build(platform.value)
     } else if upload.value {
-        UploadCommand().upload()
+        UploadCommand().upload(platform.value)
     } else {
         HelpCommand().printHelp()
     }
