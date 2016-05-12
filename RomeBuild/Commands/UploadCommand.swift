@@ -3,7 +3,7 @@ import RomeKit
 
 struct UploadCommand {
     
-    func upload() {
+    func upload(platforms: [String]?) {
         
         if !Cartfile().exists() {
             Carthage(["update", "--no-build", "--no-checkout"])
@@ -15,11 +15,11 @@ struct UploadCommand {
         let dependencies = Cartfile().load()
         
         for (name, revision) in dependencies {
+            print("")
             print(name, revision)
             if Rome().getLatestByRevison(name, revision: revision) == nil {
                 dependenciesToBuild[name] = revision
             }
-            print("")
         }
         
         let dependenciesToUploadArray = Array(dependenciesToBuild.keys.map { $0 })
@@ -29,13 +29,21 @@ struct UploadCommand {
                 let dependencyPath = "\(Environment().currentDirectory()!)/Carthage/Checkouts/\(dependency)"
                 
                 print("Checkout project dependency \(dependency)")
-                Carthage(["checkout", dependency])
+                Carthage(["checkout", dependency, "--no-use-binaries"])
                 
                 print("Checkout inner dependencies for \(dependency)")
-                Carthage(["checkout", "--project-directory", dependencyPath])
+                Carthage(["bootstrap", "--no-build", "--project-directory", dependencyPath])
                 
                 print("Building \(dependency) for archive")
-                Carthage(["build", "--no-skip-current", "--project-directory", dependencyPath])
+                
+                var buildArchive = ["build", "--no-skip-current", "--project-directory", dependencyPath]
+                
+                if let buildPlatforms = platforms {
+                    buildArchive.append("--platform")
+                    buildArchive.appendContentsOf(buildPlatforms)
+                }
+                
+                Carthage(buildArchive)
                 Carthage(["archive", "--output", Environment().currentDirectory()!], path: dependencyPath)
                 uploadAsset(dependency, revision: dependenciesToBuild[dependency]!)
                 
