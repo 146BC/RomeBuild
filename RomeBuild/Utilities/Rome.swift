@@ -41,24 +41,16 @@ struct Rome {
         }
 
         var progressBar = ProgressBar(count:100)
-        var currentProgress = 0
         
         RomeKit.Assets.create(name, revision: revision, data: data, queue: queue, progress: { (bytesWritten, totalBytesWritten, totalBytesExpectedToWrite) in
             
             let currentPercent = Int(Float(totalBytesWritten) / Float(totalBytesExpectedToWrite) * 100)
 
-            while currentProgress < currentPercent {
-                progressBar.next()
-                currentProgress += 1
-            }
-
-            //print(currentPercent, "%")
+            progressBar.setValue(currentPercent)
             
             }, completionHandler: { (asset, error) in
 
-                for _ in currentProgress...100 {
-                    progressBar.next()
-                }
+                progressBar.setValue(100)
                 
                 if let asset = asset {
                     print("Asset created on Rome server:", asset.id!)
