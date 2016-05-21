@@ -1,5 +1,6 @@
 import Foundation
 import RomeKit
+import Progress
 
 struct Rome {
     
@@ -38,13 +39,18 @@ struct Rome {
             print("File not found")
             return
         }
+
+        var progressBar = ProgressBar(count:100)
         
         RomeKit.Assets.create(name, revision: revision, data: data, queue: queue, progress: { (bytesWritten, totalBytesWritten, totalBytesExpectedToWrite) in
             
             let currentPercent = Int(Float(totalBytesWritten) / Float(totalBytesExpectedToWrite) * 100)
-            print(currentPercent, "%")
+
+            progressBar.setValue(currentPercent)
             
             }, completionHandler: { (asset, error) in
+
+                progressBar.setValue(100)
                 
                 if let asset = asset {
                     print("Asset created on Rome server:", asset.id!)

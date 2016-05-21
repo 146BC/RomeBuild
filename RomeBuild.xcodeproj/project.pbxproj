@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		056D13DE1CEF5C55002FF045 /* Progress.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 056D13DB1CEF58B2002FF045 /* Progress.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		A14315981CDBFC3F00C279FD /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = A14315971CDBFC3F00C279FD /* main.swift */; };
 		A14315A31CDBFEA300C279FD /* RomeKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = A143159A1CDBFE8600C279FD /* RomeKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		A14315A51CDBFEA300C279FD /* ObjectMapper.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = A143159B1CDBFE8600C279FD /* ObjectMapper.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -31,6 +32,7 @@
 			dstSubfolderSpec = 10;
 			files = (
 				A14315B81CDE19A600C279FD /* Regex.framework in Embed Frameworks */,
+				056D13DE1CEF5C55002FF045 /* Progress.framework in Embed Frameworks */,
 				A14315A51CDBFEA300C279FD /* ObjectMapper.framework in Embed Frameworks */,
 				A14315A31CDBFEA300C279FD /* RomeKit.framework in Embed Frameworks */,
 				A14315A71CDBFEA300C279FD /* CommandLine.framework in Embed Frameworks */,
@@ -42,6 +44,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		056D13DB1CEF58B2002FF045 /* Progress.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Progress.framework; path = Carthage/Build/Mac/Progress.framework; sourceTree = "<group>"; };
 		A14315871CDBFB9200C279FD /* RomeBuild.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RomeBuild.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A14315911CDBFB9200C279FD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A14315971CDBFC3F00C279FD /* main.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
@@ -103,6 +106,7 @@
 		A14315991CDBFC8400C279FD /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				056D13DB1CEF58B2002FF045 /* Progress.framework */,
 				A14315B51CDE19A100C279FD /* Regex.framework */,
 				A143159A1CDBFE8600C279FD /* RomeKit.framework */,
 				A143159B1CDBFE8600C279FD /* ObjectMapper.framework */,
