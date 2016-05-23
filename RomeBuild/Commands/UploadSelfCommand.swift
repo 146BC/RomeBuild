@@ -6,7 +6,7 @@ struct UploadSelfCommand {
     func upload(productName: String, revision: String, platforms: String?) {
         
         if !Cartfile().exists() {
-            Carthage(["update", "--no-build", "--no-checkout"])
+            Carthage(["update", "--no-build"])
         } else {
             Carthage(["bootstrap", "--no-build"])
         }
