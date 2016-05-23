@@ -3,7 +3,7 @@ import RomeKit
 
 struct UploadCommand {
     
-    func upload(platforms: [String]?) {
+    func upload(platforms: String?) {
         
         if !Cartfile().exists() {
             Carthage(["update", "--no-build", "--no-checkout"])
@@ -40,30 +40,17 @@ struct UploadCommand {
                 
                 if let buildPlatforms = platforms {
                     buildArchive.append("--platform")
-                    buildArchive.appendContentsOf(buildPlatforms)
+                    buildArchive.append(buildPlatforms)
                 }
                 
                 Carthage(buildArchive)
                 Carthage(["archive", "--output", Environment().currentDirectory()!], path: dependencyPath)
-                uploadAsset(dependency, revision: dependenciesToBuild[dependency]!)
+                Helpers().uploadAsset(dependency, revision: dependenciesToBuild[dependency]!)
                 
             }
         }
         
         print("Upload complete")
-        
-    }
-    
-    private func uploadAsset(name: String, revision: String) {
-        
-        do
-        {
-            let filePath = "\(Environment().currentDirectory()!)/\(name).framework.zip"
-            Rome().addAsset(name, revision: revision, path: filePath)
-            try NSFileManager.defaultManager().removeItemAtPath(filePath)
-        } catch {
-            print(error)
-        }
         
     }
     
