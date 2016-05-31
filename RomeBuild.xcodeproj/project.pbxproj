@@ -22,6 +22,8 @@
 		A14315C31CDE449E00C279FD /* Unzip.swift in Sources */ = {isa = PBXBuildFile; fileRef = A14315C21CDE449E00C279FD /* Unzip.swift */; };
 		A14315C51CDE7E5700C279FD /* UploadCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = A14315C41CDE7E5700C279FD /* UploadCommand.swift */; };
 		A14315C91CDE7F7800C279FD /* Rome.swift in Sources */ = {isa = PBXBuildFile; fileRef = A14315C81CDE7F7800C279FD /* Rome.swift */; };
+		A14E81E61CF272020064DF2B /* UploadSelfCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = A14E81E51CF272020064DF2B /* UploadSelfCommand.swift */; };
+		A14E81E81CF284550064DF2B /* Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = A14E81E71CF284550064DF2B /* Helpers.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -61,6 +63,8 @@
 		A14315C21CDE449E00C279FD /* Unzip.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Unzip.swift; path = Utilities/Unzip.swift; sourceTree = "<group>"; };
 		A14315C41CDE7E5700C279FD /* UploadCommand.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UploadCommand.swift; sourceTree = "<group>"; };
 		A14315C81CDE7F7800C279FD /* Rome.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Rome.swift; path = Utilities/Rome.swift; sourceTree = "<group>"; };
+		A14E81E51CF272020064DF2B /* UploadSelfCommand.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UploadSelfCommand.swift; sourceTree = "<group>"; };
+		A14E81E71CF284550064DF2B /* Helpers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Helpers.swift; path = Utilities/Helpers.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -122,6 +126,7 @@
 				A14315AC1CDBFEED00C279FD /* HelpCommand.swift */,
 				A14315AE1CDC014B00C279FD /* BuildCommand.swift */,
 				A14315C41CDE7E5700C279FD /* UploadCommand.swift */,
+				A14E81E51CF272020064DF2B /* UploadSelfCommand.swift */,
 			);
 			path = Commands;
 			sourceTree = "<group>";
@@ -142,6 +147,7 @@
 				A14315BF1CDE33F800C279FD /* Environment.swift */,
 				A14315C21CDE449E00C279FD /* Unzip.swift */,
 				A14315C81CDE7F7800C279FD /* Rome.swift */,
+				A14E81E71CF284550064DF2B /* Helpers.swift */,
 			);
 			name = Utilities;
 			sourceTree = "<group>";
@@ -219,6 +225,8 @@
 				A14315C01CDE33F800C279FD /* Environment.swift in Sources */,
 				A14315C51CDE7E5700C279FD /* UploadCommand.swift in Sources */,
 				A14315AD1CDBFEED00C279FD /* HelpCommand.swift in Sources */,
+				A14E81E81CF284550064DF2B /* Helpers.swift in Sources */,
+				A14E81E61CF272020064DF2B /* UploadSelfCommand.swift in Sources */,
 				A14315C31CDE449E00C279FD /* Unzip.swift in Sources */,
 				A14315C91CDE7F7800C279FD /* Rome.swift in Sources */,
 				A14315BE1CDE2C8A00C279FD /* Carthage.swift in Sources */,
