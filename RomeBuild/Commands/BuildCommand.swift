@@ -3,7 +3,7 @@ import RomeKit
 
 struct BuildCommand {
     
-    func build(platforms: [String]?) {
+    func build(platforms: String?) {
         
         if !Cartfile().exists() {
             Carthage(["update", "--no-build", "--no-checkout"])
@@ -34,7 +34,7 @@ struct BuildCommand {
             
             if let selectedPlatforms = platforms {
                 buildCommand.append("--platform")
-                buildCommand.appendContentsOf(selectedPlatforms)
+                buildCommand.append(selectedPlatforms)
             }
             
             buildCommand.appendContentsOf(dependenciesToBuildArray)

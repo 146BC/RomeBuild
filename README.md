@@ -25,4 +25,8 @@ Fetches dependencies from a Rome Server & builds the rest using *carthage build 
 
 Builds dependencies that are not available on Rome Server using: *carthage build dependency-name --no-skip-current* and *carthage archive dependency-name* then uploads every dependency on Rome Server
 
+`romebuild --upload --self ProductName Revision`
+
+Builds the current project using *carthage build --no-skip-current* and *carthage archive* then uploads the generated archive on Rome Server
+
 All commands use Cartfile.resolved as a reference, if the file is not present a new one will be generated.
