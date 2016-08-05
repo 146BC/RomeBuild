@@ -45,7 +45,6 @@ struct UploadCommand {
                 
                 Carthage(buildArchive)
                 let status = Carthage(["archive", "--output", Environment().currentDirectory()!], path: dependencyPath)
-
                 Helpers().uploadAsset(dependency, revision: dependenciesToBuild[dependency]!, filePath: getFrameworkPath(status))
             }
         }

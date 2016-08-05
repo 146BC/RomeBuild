@@ -1,4 +1,5 @@
 import Foundation
+import Regex
 
 func Carthage(args: [String], path: String? = nil) -> TaskStatus {
     let task = NSTask()
@@ -24,7 +25,7 @@ func Carthage(args: [String], path: String? = nil) -> TaskStatus {
 
 func getFrameworkPath(taskStatus: TaskStatus) -> String? {    
     if let lastLineOfOutput = taskStatus.standardOutput?.last {
-        return Helpers().matchesForRegexInText("Created (.*framework.zip)$", text: lastLineOfOutput)?.first
+        return Regex("Created (.*framework.zip)$").match(lastLineOfOutput)?.captures[0]
     }
     return nil
 }
