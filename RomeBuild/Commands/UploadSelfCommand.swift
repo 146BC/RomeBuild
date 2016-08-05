@@ -21,9 +21,9 @@ struct UploadSelfCommand {
         }
         
         Carthage(buildArchive)
-        Carthage(["archive"])
+        let status = Carthage(["archive"])
         
-        Helpers().uploadAsset(productName, revision: revision)
+        Helpers().uploadAsset(productName, revision: revision, filePath: getFrameworkPath(status))
         print("Upload complete")
         
     }
