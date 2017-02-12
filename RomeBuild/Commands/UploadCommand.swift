@@ -3,12 +3,12 @@ import RomeKit
 
 struct UploadCommand {
     
-    func upload(platforms: String?) {
+    func upload(platforms: String?, additionalArguments: [String]) {
         
         if !Cartfile().exists() {
-            Carthage(["update", "--no-build", "--no-checkout"])
+            Carthage(["update", "--no-build", "--no-checkout"] + additionalArguments)
         } else {
-            Carthage(["bootstrap", "--no-build", "--no-checkout"])
+            Carthage(["bootstrap", "--no-build", "--no-checkout"] + additionalArguments)
         }
         
         var dependenciesToBuild = [String:String]()
@@ -29,10 +29,10 @@ struct UploadCommand {
                 let dependencyPath = "\(Environment().currentDirectory()!)/Carthage/Checkouts/\(dependency)"
                 
                 print("Checkout project dependency \(dependency)")
-                Carthage(["checkout", dependency, "--no-use-binaries"])
+                Carthage(["checkout", dependency, "--no-use-binaries"] + additionalArguments)
                 
                 print("Checkout inner dependencies for \(dependency)")
-                Carthage(["bootstrap", "--no-build", "--project-directory", dependencyPath])
+                Carthage(["bootstrap", "--no-build", "--project-directory", dependencyPath] + additionalArguments)
                 
                 print("Building \(dependency) for archive")
                 
@@ -43,8 +43,10 @@ struct UploadCommand {
                     buildArchive.append(buildPlatforms)
                 }
                 
+                buildArchive.appendContentsOf(additionalArguments)
+                
                 Carthage(buildArchive)
-                let status = Carthage(["archive", "--output", Environment().currentDirectory()!], path: dependencyPath)
+                let status = Carthage(["archive", "--output", Environment().currentDirectory()!]+additionalArguments, path: dependencyPath)
                 Helpers().uploadAsset(dependency, revision: dependenciesToBuild[dependency]!, filePath: getFrameworkPath(status))
             }
         }

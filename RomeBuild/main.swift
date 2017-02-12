@@ -41,16 +41,16 @@ do {
     try cli.parse()
     
     if build.value {
-        BuildCommand().build(platform.value)
+        BuildCommand().build(platform.value, additionalArguments: cli.unparsedArguments)
     } else if upload.value {
         if let uploadSelfParameters = uploadSelf.value {
             if uploadSelfParameters.count == 2 {
-                UploadSelfCommand().upload(uploadSelfParameters[0], revision: uploadSelfParameters[1], platforms: platform.value)
+                UploadSelfCommand().upload(uploadSelfParameters[0], revision: uploadSelfParameters[1], platforms: platform.value, additionalArguments: cli.unparsedArguments)
             } else {
                 print("Uploading self requires product name & revision parameters")
             }
         } else {
-            UploadCommand().upload(platform.value)
+            UploadCommand().upload(platform.value, additionalArguments: cli.unparsedArguments)
         }
     } else {
         HelpCommand().printHelp()

@@ -3,12 +3,12 @@ import RomeKit
 
 struct UploadSelfCommand {
     
-    func upload(productName: String, revision: String, platforms: String?) {
+    func upload(productName: String, revision: String, platforms: String?, additionalArguments: [String]) {
         
         if !Cartfile().exists() {
-            Carthage(["update", "--no-build"])
+            Carthage(["update", "--no-build"] + additionalArguments)
         } else {
-            Carthage(["bootstrap", "--no-build"])
+            Carthage(["bootstrap", "--no-build"] + additionalArguments)
         }
         
         print("Building \(productName) for archive")
@@ -19,6 +19,7 @@ struct UploadSelfCommand {
             buildArchive.append("--platform")
             buildArchive.append(buildPlatforms)
         }
+        buildArchive.appendContentsOf(additionalArguments)
         
         Carthage(buildArchive)
         let status = Carthage(["archive"])
