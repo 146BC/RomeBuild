@@ -89,7 +89,7 @@ func filterAdditionalArgs(task: String, args: [String]) -> [String] {
     let allowedArgs = carthageArguments[task]
     if let allowedArgs = allowedArgs {
         var index = additionalArgs.startIndex
-        while index <= additionalArgs.endIndex {
+        while index < additionalArgs.endIndex {
             let arg = allowedArgs[additionalArgs[index]]
             if let arg = arg {
                 if arg {
