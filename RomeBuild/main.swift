@@ -40,17 +40,19 @@ cli.addOptions(build, platform, upload, uploadSelf, help)
 do {
     try cli.parse()
     
+    let additionalArguments = cli.unparsedArguments.filter {$0 != "--"}
+    
     if build.value {
-        BuildCommand().build(platform.value, additionalArguments: cli.unparsedArguments)
+        BuildCommand().build(platform.value, additionalArguments: additionalArguments)
     } else if upload.value {
         if let uploadSelfParameters = uploadSelf.value {
             if uploadSelfParameters.count == 2 {
-                UploadSelfCommand().upload(uploadSelfParameters[0], revision: uploadSelfParameters[1], platforms: platform.value, additionalArguments: cli.unparsedArguments)
+                UploadSelfCommand().upload(uploadSelfParameters[0], revision: uploadSelfParameters[1], platforms: platform.value, additionalArguments: additionalArguments)
             } else {
                 print("Uploading self requires product name & revision parameters")
             }
         } else {
-            UploadCommand().upload(platform.value, additionalArguments: cli.unparsedArguments)
+            UploadCommand().upload(platform.value, additionalArguments: additionalArguments)
         }
     } else {
         HelpCommand().printHelp()

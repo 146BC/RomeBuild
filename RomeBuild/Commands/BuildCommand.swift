@@ -6,7 +6,7 @@ struct BuildCommand {
     func build(platforms: String?, additionalArguments: [String]) {
         
         if !Cartfile().exists() {
-            Carthage(["update", "--no-build", "--no-checkout"] + additionalArguments)
+            Carthage(["update", "--no-build", "--no-checkout"]+filterAdditionalArgs("update", args: additionalArguments))
         }
         
         var dependenciesToBuild = [String:String]()
@@ -27,7 +27,7 @@ struct BuildCommand {
         
         if dependenciesToBuildArray.count > 0 {
             var checkoutCommand = ["checkout"]
-            checkoutCommand.appendContentsOf(additionalArguments)
+            checkoutCommand.appendContentsOf(filterAdditionalArgs("checkout", args: additionalArguments))
             checkoutCommand.appendContentsOf(dependenciesToBuildArray)
             Carthage(checkoutCommand)
             
@@ -37,7 +37,7 @@ struct BuildCommand {
                 buildCommand.append("--platform")
                 buildCommand.append(selectedPlatforms)
             }
-            buildCommand.appendContentsOf(additionalArguments)
+            buildCommand.appendContentsOf(filterAdditionalArgs("build", args: additionalArguments))
             
             buildCommand.appendContentsOf(dependenciesToBuildArray)
             
