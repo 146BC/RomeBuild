@@ -12,8 +12,8 @@ struct Helpers {
 
         do
         {
-            Rome().addAsset(name, revision: revision, path: path)
-            try NSFileManager.defaultManager().removeItemAtPath(path)
+            Rome().addAsset(name: name, revision: revision, path: path)
+            try FileManager.default.removeItem(atPath: path)
         } catch {
             print(error)
         }

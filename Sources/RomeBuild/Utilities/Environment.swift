@@ -2,7 +2,7 @@ import Foundation
 
 struct Environment {
     
-    let env = NSProcessInfo.processInfo().environment
+    let env = ProcessInfo.processInfo.environment
     
     func currentDirectory() -> String? {
         return env["PWD"]

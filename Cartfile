@@ -1,4 +1,0 @@
-github "146BC/RomeKit" ~> 0.3
-github "BernardGatt/CommandLine" ~> 2.2
-github "sharplet/Regex" ~> 0.4
-github "146BC/Progress.swift" "feature/multiple_increments"

@@ -1,11 +1,11 @@
-import CommandLine
+import CommandLineKit
 import Foundation
 import RomeKit
 import Alamofire
 
-let env = NSProcessInfo.processInfo().environment
+let env = ProcessInfo.processInfo.environment
 
-if let baseUrl = env["ROME_ENDPOINT"], apiKey = env["ROME_KEY"] {
+if let baseUrl = env["ROME_ENDPOINT"], let apiKey = env["ROME_KEY"] {
     let bootstrap = RomeKit.Bootstrap.init(baseUrl: baseUrl, apiKey: apiKey)
     bootstrap?.start()
 } else {
@@ -40,17 +40,19 @@ cli.addOptions(build, platform, upload, uploadSelf, help)
 do {
     try cli.parse()
     
+    let additionalArguments = cli.unparsedArguments.filter {$0 != "--"}
+    
     if build.value {
-        BuildCommand().build(platform.value)
+        BuildCommand().build(platforms: platform.value, additionalArguments: additionalArguments)
     } else if upload.value {
         if let uploadSelfParameters = uploadSelf.value {
             if uploadSelfParameters.count == 2 {
-                UploadSelfCommand().upload(uploadSelfParameters[0], revision: uploadSelfParameters[1], platforms: platform.value)
+                UploadSelfCommand().upload(productName: uploadSelfParameters[0], revision: uploadSelfParameters[1], platforms: platform.value, additionalArguments: additionalArguments)
             } else {
                 print("Uploading self requires product name & revision parameters")
             }
         } else {
-            UploadCommand().upload(platform.value)
+            UploadCommand().upload(platforms: platform.value, additionalArguments: additionalArguments)
         }
     } else {
         HelpCommand().printHelp()

@@ -3,12 +3,12 @@ import RomeKit
 
 struct UploadCommand {
     
-    func upload(platforms: String?) {
+    func upload(platforms: String?, additionalArguments: [String]) {
         
         if !Cartfile().exists() {
-            Carthage(["update", "--no-build", "--no-checkout"])
+            Carthage(["update", "--no-build", "--no-checkout"]+filterAdditionalArgs(task: "update", args: additionalArguments))
         } else {
-            Carthage(["bootstrap", "--no-build", "--no-checkout"])
+            Carthage(["bootstrap", "--no-build", "--no-checkout"]+filterAdditionalArgs(task: "bootstrap", args: additionalArguments))
         }
         
         var dependenciesToBuild = [String:String]()
@@ -17,7 +17,7 @@ struct UploadCommand {
         for (name, revision) in dependencies {
             print("")
             print(name, revision)
-            if Rome().getLatestByRevison(name, revision: revision) == nil {
+            if Rome().getLatestByRevison(name: name, revision: revision) == nil {
                 dependenciesToBuild[name] = revision
             }
         }
@@ -29,10 +29,10 @@ struct UploadCommand {
                 let dependencyPath = "\(Environment().currentDirectory()!)/Carthage/Checkouts/\(dependency)"
                 
                 print("Checkout project dependency \(dependency)")
-                Carthage(["checkout", dependency, "--no-use-binaries"])
+                Carthage(["checkout", dependency, "--no-use-binaries"]+filterAdditionalArgs(task: "checkout", args: additionalArguments))
                 
                 print("Checkout inner dependencies for \(dependency)")
-                Carthage(["bootstrap", "--no-build", "--project-directory", dependencyPath])
+                Carthage(["bootstrap", "--no-build", "--project-directory", dependencyPath]+filterAdditionalArgs(task: "bootstrap", args: additionalArguments))
                 
                 print("Building \(dependency) for archive")
                 
@@ -43,9 +43,11 @@ struct UploadCommand {
                     buildArchive.append(buildPlatforms)
                 }
                 
+                buildArchive.append(contentsOf: filterAdditionalArgs(task: "build", args: additionalArguments))
+                
                 Carthage(buildArchive)
-                let status = Carthage(["archive", "--output", Environment().currentDirectory()!], path: dependencyPath)
-                Helpers().uploadAsset(dependency, revision: dependenciesToBuild[dependency]!, filePath: getFrameworkPath(status))
+                let status = Carthage(["archive", "--output", Environment().currentDirectory()!]+filterAdditionalArgs(task: "archive", args: additionalArguments), path: dependencyPath)
+                Helpers().uploadAsset(name: dependency, revision: dependenciesToBuild[dependency]!, filePath: getFrameworkPath(taskStatus: status))
             }
         }
         
