@@ -6,9 +6,9 @@ struct UploadSelfCommand {
     func upload(productName: String, revision: String, platforms: String?, additionalArguments: [String]) {
         
         if !Cartfile().exists() {
-            Carthage(["update", "--no-build"]+filterAdditionalArgs("update", args: additionalArguments))
+            Carthage(["update", "--no-build"]+filterAdditionalArgs(task: "update", args: additionalArguments))
         } else {
-            Carthage(["bootstrap", "--no-build"]+filterAdditionalArgs("bootstrap", args: additionalArguments))
+            Carthage(["bootstrap", "--no-build"]+filterAdditionalArgs(task: "bootstrap", args: additionalArguments))
         }
         
         print("Building \(productName) for archive")
@@ -19,12 +19,12 @@ struct UploadSelfCommand {
             buildArchive.append("--platform")
             buildArchive.append(buildPlatforms)
         }
-        buildArchive.appendContentsOf(filterAdditionalArgs("build", args: additionalArguments))
+        buildArchive.append(contentsOf: filterAdditionalArgs(task: "build", args: additionalArguments))
         
         Carthage(buildArchive)
-        let status = Carthage(["archive"]+filterAdditionalArgs("archive", args: additionalArguments))
+        let status = Carthage(["archive"]+filterAdditionalArgs(task: "archive", args: additionalArguments))
         
-        Helpers().uploadAsset(productName, revision: revision, filePath: getFrameworkPath(status))
+        Helpers().uploadAsset(name: productName, revision: revision, filePath: getFrameworkPath(taskStatus: status))
         print("Upload complete")
         
     }

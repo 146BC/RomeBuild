@@ -8,14 +8,14 @@ struct Cartfile {
             return false
         }
         
-        return NSFileManager.defaultManager().fileExistsAtPath(filePath)
+        return FileManager.default.fileExists(atPath: filePath)
     }
     
     func load() -> [String:String] {
         var dependencies = [String:String]()
         
-        if let filePath = cartfilePath(), cartfileContents = try? String.init(contentsOfFile: filePath) {
-            dependencies = parseFile(cartfileContents)
+        if let filePath = cartfilePath(), let cartfileContents = try? String.init(contentsOfFile: filePath) {
+            dependencies = parseFile(contents: cartfileContents)
         }
         
         return dependencies
@@ -36,14 +36,13 @@ struct Cartfile {
             
             let fvRegex = Regex("\"\\s*(.*?)\\s*\"")
             
-            let matches = fvRegex.allMatches(line)
-            if let framework = matches[0].captures.first!, version = matches[1].captures.first! {
-                if let frameworkName = framework.componentsSeparatedByString("/").last {
-                    let cleanedFramework = frameworkName.stringByReplacingOccurrencesOfString(".git", withString: "")
+            let matches = fvRegex.allMatches(in: line)
+            if let framework = matches[0].captures.first!, let version = matches[1].captures.first! {
+                if let frameworkName = framework.components(separatedBy: "/").last {
+                    let cleanedFramework = frameworkName.replacingOccurrences(of: ".git", with: "")
                     dependencies[cleanedFramework] = version
                 }
             }
-                
         }
         
         return dependencies

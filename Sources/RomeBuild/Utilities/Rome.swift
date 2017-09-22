@@ -7,42 +7,41 @@ struct Rome {
     func getLatestByRevison(name: String, revision: String) -> Asset? {
         
         var romeAsset: Asset?
-        let dispatchGroup = dispatch_group_create()
-        let queue = dispatch_queue_create("", DISPATCH_QUEUE_CONCURRENT)
+        let dispatchGroup = DispatchGroup()
+        let queue = DispatchQueue(label: "", attributes: .concurrent)
         
-        dispatch_group_enter(dispatchGroup)
+        dispatchGroup.enter()
         
-        RomeKit.Assets.getLatestAssetByRevision(name.stringByAddingPercentEncodingWithAllowedCharacters(NSCharacterSet.alphanumericCharacterSet())!, revision: revision, queue: queue, completionHandler: { (asset, errors) in
+        RomeKit.Assets.getLatestAssetByRevision(name: name.addingPercentEncoding(withAllowedCharacters: .alphanumerics)!, revision: revision, queue: queue, completionHandler: { (asset, errors) in
             romeAsset = asset
             if romeAsset != nil {
                 print("Found asset on Rome:", romeAsset!.id!)
             } else {
                 print("Asset not found in Rome server, added to build list")
             }
-            
-            dispatch_group_leave(dispatchGroup)
+            dispatchGroup.leave()
         })
         
-        dispatch_group_wait(dispatchGroup, DISPATCH_TIME_FOREVER)
+        dispatchGroup.wait()
         
         return romeAsset
     }
     
     func addAsset(name: String, revision: String, path: String) {
         
-        let dispatchGroup = dispatch_group_create()
-        let queue = dispatch_queue_create("", DISPATCH_QUEUE_CONCURRENT)
+        let dispatchGroup = DispatchGroup()
+        let queue = DispatchQueue(label: "", attributes: .concurrent)
         
-        dispatch_group_enter(dispatchGroup)
+        dispatchGroup.enter()
         
-        guard let data = NSData(contentsOfFile: path) else {
+        guard let data = try? Data(contentsOf: URL(fileURLWithPath: path)) else {
             print("File not found")
             return
         }
 
         var progressBar = ProgressBar(count:100)
         
-        RomeKit.Assets.create(name, revision: revision, data: data, queue: queue, progress: { (bytesWritten, totalBytesWritten, totalBytesExpectedToWrite) in
+        RomeKit.Assets.create(name: name, revision: revision, data: data, queue: queue, progress: { (totalBytesWritten, totalBytesExpectedToWrite) in
             
             let currentPercent = Int(Float(totalBytesWritten) / Float(totalBytesExpectedToWrite) * 100)
 
@@ -56,12 +55,9 @@ struct Rome {
                     print("Asset created on Rome server:", asset.id!)
                 }
                 
-                dispatch_group_leave(dispatchGroup)
-                
+                dispatchGroup.leave()
         })
         
-        dispatch_group_wait(dispatchGroup, DISPATCH_TIME_FOREVER)
-        
+        dispatchGroup.wait()
     }
-    
 }

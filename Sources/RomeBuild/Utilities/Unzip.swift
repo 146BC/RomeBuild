@@ -1,7 +1,8 @@
 import Foundation
 
+@discardableResult
 func Unzip(zip: String, destination: String) -> Int32 {
-    let task = NSTask()
+    let task = Process()
     task.launchPath = "/usr/bin/unzip"
     task.currentDirectoryPath = Environment().currentDirectory()!
     task.arguments = ["-q", "-o", "-u", "-d", destination, zip]

@@ -62,9 +62,10 @@ private let carthageArguments: Dictionary<String, Dictionary<String, Bool>> = [
     ]
 ]
 
-func Carthage(args: [String], path: String? = nil) -> TaskStatus {
-    let task = NSTask()
-    let standardOutputPipe = NSPipe()
+@discardableResult
+func Carthage(_ args: [String], path: String? = nil) -> TaskStatus {
+    let task = Process()
+    let standardOutputPipe = Pipe()
     task.launchPath = "/usr/local/bin/carthage"
     if let path = path {
         task.currentDirectoryPath = path
@@ -76,7 +77,7 @@ func Carthage(args: [String], path: String? = nil) -> TaskStatus {
 
     let readHandle = standardOutputPipe.fileHandleForReading
     let data = readHandle.readDataToEndOfFile()
-    if let standardOutput = String.init(data: data, encoding: NSUTF8StringEncoding) {
+    if let standardOutput = String.init(data: data, encoding: .utf8) {
         let lines = standardOutput.characters.split { $0 == "\n" || $0 == "\r\n" }.map(String.init)
         return TaskStatus(status: task.terminationStatus, standardOutput: lines)
     } else {
@@ -97,7 +98,7 @@ func filterAdditionalArgs(task: String, args: [String]) -> [String] {
                 }
                 index += 1
             } else {
-                additionalArgs.removeAtIndex(index)
+                additionalArgs.remove(at: index)
             }
         }
     }
@@ -106,7 +107,7 @@ func filterAdditionalArgs(task: String, args: [String]) -> [String] {
 
 func getFrameworkPath(taskStatus: TaskStatus) -> String? {
     if let lastLineOfOutput = taskStatus.standardOutput?.last {
-        return Regex("Created (.*framework.zip)$").match(lastLineOfOutput)?.captures[0]
+        return Regex("Created (.*framework.zip)$").firstMatch(in: lastLineOfOutput)?.captures[0]
     }
     return nil
 }
