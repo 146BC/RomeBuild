@@ -15,7 +15,7 @@ let package = Package(
         .executable(name: "romebuild", targets: ["RomeBuild"]),
     ],
     dependencies: [
-        .package(url: "https://github.com/ypopovych/RomeKit.git", .branch("master")),
+        .package(url: "https://github.com/ypopovych/RomeKit.git", from: "0.4.0"),
         .package(url: "https://github.com/jatoben/CommandLine.git", .branch("master")),
         .package(url: "https://github.com/sharplet/Regex.git", from: "1.1.0"),
         .package(url: "https://github.com/jkandzi/Progress.swift.git", from: "0.2.0")
